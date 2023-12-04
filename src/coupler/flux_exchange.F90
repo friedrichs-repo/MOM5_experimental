@@ -1063,16 +1063,17 @@ subroutine flux_exchange_init ( Time, Atm, Land, Ice, Ocean, Ocean_state,&
 !
 
     call mpp_get_compute_domain( Ice%domain, is, ie, js, je )
-    kd = size(Ice%ice_mask,3)
-    call coupler_type_copy(ex_gas_fields_ice, Ice%ocean_fields, is, ie, js, je, kd,     &
-         'ice_flux', Ice%axes, Time, suffix = '_ice')
+    if( Ice%pe ) then
+       kd = size(Ice%ice_mask,3)
+       call coupler_type_copy(ex_gas_fields_ice, Ice%ocean_fields, is, ie, js, je, kd,     &
+            'ice_flux', Ice%axes, Time, suffix = '_ice')
 
-    call coupler_type_copy(ex_gas_fluxes, Ice%ocean_fluxes, is, ie, js, je,             &
-         'ice_flux', Ice%axes(1:2), Time, suffix = '_ice')
+       call coupler_type_copy(ex_gas_fluxes, Ice%ocean_fluxes, is, ie, js, je,             &
+            'ice_flux', Ice%axes(1:2), Time, suffix = '_ice')
 
-    call coupler_type_copy(ex_gas_fluxes, Ice%ocean_fluxes_top, is, ie, js, je, kd,     &
-         'ice_flux', Ice%axes, Time, suffix = '_ice_top')
-
+       call coupler_type_copy(ex_gas_fluxes, Ice%ocean_fluxes_top, is, ie, js, je, kd,     &
+            'ice_flux', Ice%axes, Time, suffix = '_ice_top')
+    end if
 !       initialize the Ocean type for extra fields for surface fluxes
 ! Same allocation of arrays and stuff
 !       (this must be done after the Ocean fields are allocated as the fields on the Ocean%fields

@@ -5125,7 +5125,7 @@ contains
        !     ( cobalt%irr_inst(i,j,k)/(cobalt%ki_fescav+cobalt%irr_inst(i,j,k)) ) * &
        !     (log10(cobalt%kfe_eq_lig_ll) - log10(cobalt%kfe_eq_lig_hl)) )
        cobalt%kfe_eq_lig(i,j,k) = min(cobalt%kfe_eq_lig_ll, 10**( log10(cobalt%kfe_eq_lig_hl) + &
-            max(0.0,cobalt%gamma_fescav*log10(cobalt%io_fescav/cobalt%irr_inst(i,j,k))) ) ) 
+            max(0.0,cobalt%gamma_fescav*(log10(cobalt%io_fescav / (cobalt%irr_inst(i,j,k)+epsilon(0.0))))) ) )
 
        feprime = 1.0 + cobalt%kfe_eq_lig(i,j,k) * (cobalt%felig_bkg + cobalt%felig_2_don * &
             (cobalt%f_sldon(i,j,k) + cobalt%f_srdon(i,j,k)) - cobalt%f_fed(i,j,k))
@@ -5940,8 +5940,10 @@ contains
     deallocate(rho_dzt_100)
 
     do j = jsc, jec ; do i = isc, iec ; !{
-      cobalt%btm_temp(i,j) = TEMP(i,j,grid_kmt(i,j))
-      cobalt%btm_o2(i,j) = cobalt%f_o2(i,j,grid_kmt(i,j))      
+      if (grid_kmt(i,j) .gt. 0) then
+        cobalt%btm_temp(i,j) = TEMP(i,j,grid_kmt(i,j))
+        cobalt%btm_o2(i,j) = cobalt%f_o2(i,j,grid_kmt(i,j))
+      endif
     enddo; enddo  !} i, j
 
     !

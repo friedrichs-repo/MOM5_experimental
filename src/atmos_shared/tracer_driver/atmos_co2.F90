@@ -172,7 +172,7 @@ id=size(co2,1); jd=size(co2,2); kd=min(size(co2,3),restore_klimit)
 
 co2_restore(:,:,:)=0.0
 
-logunit=stdlog()
+!logunit=stdlog()
 if (ind_co2 > 0 .and. do_co2_restore) then
 
 ! input is in dvmr (mol/mol)
@@ -256,7 +256,7 @@ integer :: logunit
 logical   :: used
 !-----------------------------------------------------------------------
 
-logunit=stdlog()
+!logunit=stdlog()
 
 if (ind_co2 > 0 .and. co2_radiation_override) then
 
@@ -365,7 +365,7 @@ co2_emis2d(:,:)=0.0
 co2_emis_source(:,:,:)=0.0
 co2_emiss_dt(:,:,:)=0.0
 
-logunit=stdlog()
+!logunit=stdlog()
 if (ind_co2 > 0 .and. do_co2_emissions) then
 
 
