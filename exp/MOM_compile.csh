@@ -1,9 +1,9 @@
 #!/bin/csh -f
 # Minimal compile script for fully coupled model CM2M experiments
 
-set platform      = gfortran    # A unique identifier for your platform
+set platform      = intel       # A unique identifier for your platform
                                 # This corresponds to the mkmf templates in $root/bin dir.
-set type          = MOM_solo    # Type of the experiment
+set type          = ESM2M       # Type of the experiment
 set unit_testing = 0
 set help = 0
 set debug = 0
